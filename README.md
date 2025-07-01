@@ -130,19 +130,4 @@ function esFeriado(fecha: Chronos): boolean {
 }
 ```
 
-## 🤝 Contribuir
-
-¡Las contribuciones son bienvenidas! Por favor lee nuestras [guías de contribución](https://github.com/tu-usuario/chronos/blob/main/CONTRIBUTING.md) para empezar.
-
-## 📄 Licencia
-
-Chronos es [MIT Licensed](https://github.com/tu-usuario/chronos/blob/main/LICENSE).
-
-## 🌟 Créditos
-
-Chronos es desarrollado y mantenido por [Tu Nombre] y [contribuidores](https://github.com/tu-usuario/chronos/graphs/contributors).
-
 ---
-
-¿Encontraste un bug o tienes una sugerencia? [Abre un issue](https://github.com/tu-usuario/chronos/issues) en GitHub.
-# ChronosJS
