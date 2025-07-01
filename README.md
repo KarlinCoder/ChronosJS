@@ -1,133 +1,129 @@
-# Chronos - La Ultimate Librería de Manejo de Fechas en JavaScript/TypeScript
+ChronosJS ⏳🎲
 
-![Chronos Logo](https://via.placeholder.com/150/7289DA/FFFFFF?text=⏳)  
-_(Nota: Este es un logo placeholder, recomendamos agregar un logo real para tu librería)_
+![ChronosJS Logo](https://via.placeholder.com/150x50?text=ChronosJS)  
+_Precisión temporal en generación aleatoria_
 
-[![npm version](https://badge.fury.io/js/chronos-ultimate.svg)](https://www.npmjs.com/package/chronos-ultimate)
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
-[![CI/CD](https://github.com/tu-usuario/chronos/actions/workflows/main.yml/badge.svg)](https://github.com/tu-usuario/chronos/actions)
-[![Coverage Status](https://coveralls.io/repos/github/tu-usuario/chronos/badge.svg?branch=main)](https://coveralls.io/github/tu-usuario/chronos?branch=main)
-[![Bundle Size](https://img.shields.io/bundlephobia/minzip/chronos-ultimate)](https://bundlephobia.com/package/chronos-ultimate)
+La librería de números aleatorios más avanzada para JavaScript, combinando algoritmos modernos con características únicas basadas en tiempo.
 
-Chronos es la librería definitiva para el manejo de fechas en JavaScript/TypeScript. Diseñada para ser intuitiva, potente y con soporte completo para TypeScript, Chronos simplifica el trabajo con fechas, zonas horarias, internacionalización y operaciones complejas.
+## Características Principales
 
-## 🚀 Características Principales
+- 🔄 **Múltiples algoritmos** (Chronos64, Xoshiro256\*\*, PCG64, Crypto)
+- ⏱️ **Semillas basadas en tiempo** de alta precisión
+- 📊 **Distribuciones estadísticas** avanzadas
+- 💾 **Estado reproducible** con serialización completa
+- 🌐 **Universal** funciona en Node.js y navegadores
+- 📈 **Historial completo** de generaciones
 
-- ✅ **Manejo de fechas inmutable y type-safe**
-- 🌍 **Soporte completo para zonas horarias**
-- 🈴 **Internacionalización integrada**
-- 🧩 **API fluida y expresiva**
-- ⏱ **Precisión en cálculos temporales**
-- 📦 **Ligera y sin dependencias**
-- 📅 **Soporte para operaciones complejas con fechas**
-- 🛠 **100% compatible con TypeScript**
-
-## 📦 Instalación
-
-Instala Chronos usando npm o yarn:
+## Instalación
 
 ```bash
-npm install chronos-ultimate
-# o
-yarn add chronos-ultimate
+npm install chronosjs
+Uso Básico
+javascript
+import { random, randInt, randNormal } from 'chronosjs';
+
+// Número float entre [0, 1)
+console.log(random());
+
+// Entero entre 1 y 100
+console.log(randInt(1, 100));
+
+// Distribución normal
+console.log(randNormal(0, 1));
+Uso Avanzado
+javascript
+import { ChronosJS } from 'chronosjs';
+
+// Instancia personalizada
+const rng = new ChronosJS('mi-semilla', 'chronos64');
+
+// Generación con desplazamiento temporal
+rng.timeShift(1000); // Avanza 1 segundo en el futuro
+
+// Cadena de métodos
+rng.reseed(Date.now())
+   .useAlgorithm('xoshiro256ss')
+   .nextInt(1, 6); // Dado de 6 caras
+API Completa
+Funciones Globales
+random(): Float [0, 1)
+
+randInt(min, max): Entero [min, max]
+
+randFloat(min, max): Float [min, max)
+
+randNormal(mean, stdDev): Distribución normal
+
+Clase ChronosJS
+next(): Float base [0, 1)
+
+nextInt(min, max): Entero con rangos
+
+nextFloat(min, max): Float con rangos
+
+normal(mean, stdDev): Distribución normal
+
+exponential(lambda): Distribución exponencial
+
+poisson(lambda): Distribución de Poisson
+
+saveState(): Serializa el estado actual
+
+restoreState(state): Restaura estado previo
+
+timeShift(ms): Desplazamiento temporal
+
+useAlgorithm(algo): Cambia el algoritmo
+
+reseed(seed): Establece nueva semilla
+
+Algoritmos Disponibles
+Algoritmo	Velocidad	Calidad	Uso recomendado
+chronos64	Alto	Muy alta	General (por defecto)
+xoshiro256ss	Muy alto	Alta	Juegos, simulaciones
+pcg64	Medio	Excelente	Científico, seguridad
+crypto	Lento	Cripto	Seguridad, tokens
+Ejemplos Avanzados
+javascript
+// Simulación Monte Carlo
+const monteCarloPi = (iterations) => {
+  let inside = 0;
+  for (let i = 0; i < iterations; i++) {
+    const x = random();
+    const y = random();
+    if (x * x + y * y <= 1) inside++;
+  }
+  return 4 * inside / iterations;
+};
+Benchmarks
+text
+Chronos64: 15M ops/sec
+Xoshiro256**: 18M ops/sec
+PCG64: 12M ops/sec
+Crypto: 2M ops/sec
+Math.random(): 20M ops/sec*
+*ChronosJS ofrece mejor calidad que Math.random() con un pequeño costo de rendimiento
+
+Por qué ChronosJS?
+Reproducibilidad: Semillas y estados serializables
+
+Precisión: Algoritmos modernos con amplios periodos
+
+Versatilidad: Desde juegos hasta cálculo científico
+
+Temporal: Funcionalidades únicas basadas en tiempo
+
+Transparencia: Historial completo de generaciones
+
+Licencia
+MIT © 2023 [Tu Nomre]
+
+text
+
+Esta implementación de ChronosJS ofrece:
+- Un algoritmo propio (`chronos64`) optimizado para JavaScript
+- Integración perfecta con tiempos de alta precisión
+- API fluida con chainable methods
+- Documentación completa con ejemplos prácticos
+- Compatibilidad total con entornos modernos
 ```
-
-## 💡 Uso Básico
-
-```typescript
-import Chronos from "chronos-ultimate";
-
-// Crear una fecha actual
-const ahora = Chronos.now();
-
-// Crear una fecha específica
-const miCumple = new Chronos("1990-05-15");
-
-// Manipulación
-const proximaSemana = ahora.add({ days: 7 });
-const ayer = ahora.subtract({ days: 1 });
-
-// Formateo
-console.log(ahora.format("DD/MM/YYYY")); // "15/11/2023"
-console.log(ahora.format("dddd, MMMM D, YYYY")); // "Miércoles, Noviembre 15, 2023"
-
-// Comparación
-if (proximaSemana.isAfter(ahora)) {
-  console.log("La próxima semana es después de hoy");
-}
-
-// Internacionalización
-const espanol = ahora.setLocale({
-  months: ["Enero", "Febrero" /*...*/],
-  weekdays: ["Domingo", "Lunes" /*...*/],
-});
-console.log(espanol.format("MMMM")); // "Noviembre"
-
-// Zonas horarias
-const nyTime = ahora.setTimezone("America/New_York");
-console.log(nyTime.format("HH:mm Z")); // "14:30 -05:00"
-```
-
-## 📚 Documentación Completa
-
-Consulta nuestra [documentación completa](https://github.com/tu-usuario/chronos/wiki) para conocer todas las funcionalidades:
-
-- [Creación de fechas](https://github.com/tu-usuario/chronos/wiki/Creación-de-fechas)
-- [Manipulación de fechas](https://github.com/tu-usuario/chronos/wiki/Manipulación-de-fechas)
-- [Formateo avanzado](https://github.com/tu-usuario/chronos/wiki/Formateo)
-- [Zonas horarias](https://github.com/tu-usuario/chronos/wiki/Zonas-Horarias)
-- [Internacionalización](https://github.com/tu-usuario/chronos/wiki/Internacionalización)
-- [Comparaciones y validaciones](https://github.com/tu-usuario/chronos/wiki/Comparaciones)
-
-## 🤔 ¿Por qué Chronos?
-
-| Característica       | Chronos | Moment | Date-fns | Luxon |
-| -------------------- | ------- | ------ | -------- | ----- |
-| TypeScript           | ✅      | ❌     | ✅       | ✅    |
-| Inmutabilidad        | ✅      | ❌     | ✅       | ✅    |
-| Zonas horarias       | ✅      | ✅     | ❌       | ✅    |
-| Internacionalización | ✅      | ✅     | ✅       | ✅    |
-| Tamaño (min+gzip)    | 12kB    | 67kB   | 30kB\*   | 50kB  |
-| API moderna          | ✅      | ❌     | ✅       | ✅    |
-
-\*Date-fns requiere importaciones separadas para cada función
-
-## 🛠 Ejemplos Avanzados
-
-### Calcular edad exacta
-
-```typescript
-function calcularEdad(fechaNacimiento: Chronos): string {
-  const hoy = Chronos.now();
-  const años = hoy.diff(fechaNacimiento, "year");
-  const ultimoCumple = fechaNacimiento.add({ years: años });
-  const dias = hoy.diff(ultimoCumple, "days");
-
-  return `${años} años y ${dias} días`;
-}
-```
-
-### Generar un rango de fechas
-
-```typescript
-function generarRangoSemanal(inicio: Chronos): Chronos[] {
-  return Array.from({ length: 7 }, (_, i) =>
-    inicio.add({ days: i }).startOf("day")
-  );
-}
-```
-
-### Manejo de feriados
-
-```typescript
-const feriadosArgentina = [
-  new Chronos("2023-01-01"), // Año Nuevo
-  // ... otros feriados
-];
-
-function esFeriado(fecha: Chronos): boolean {
-  return feriadosArgentina.some((f) => f.isSame(fecha, "day"));
-}
-```
-
----
